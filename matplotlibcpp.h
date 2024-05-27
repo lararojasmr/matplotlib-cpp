@@ -15,6 +15,7 @@
 #include <functional>
 #include <string> // std::stod
 
+
 #ifndef WITHOUT_NUMPY
 #  define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #  include <numpy/arrayobject.h>
@@ -347,13 +348,6 @@ template <> struct select_npy_type<uint8_t> { const static NPY_TYPES type = NPY_
 template <> struct select_npy_type<uint16_t> { const static NPY_TYPES type = NPY_USHORT; };
 template <> struct select_npy_type<uint32_t> { const static NPY_TYPES type = NPY_ULONG; };
 template <> struct select_npy_type<uint64_t> { const static NPY_TYPES type = NPY_UINT64; };
-
-// Sanity checks; comment them out or change the numpy type below if you're compiling on
-// a platform where they don't apply
-static_assert(sizeof(long long) == 8);
-template <> struct select_npy_type<long long> { const static NPY_TYPES type = NPY_INT64; };
-static_assert(sizeof(unsigned long long) == 8);
-template <> struct select_npy_type<unsigned long long> { const static NPY_TYPES type = NPY_UINT64; };
 
 template<typename Numeric>
 PyObject* get_array(const std::vector<Numeric>& v)
